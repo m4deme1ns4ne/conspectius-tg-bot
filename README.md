@@ -71,4 +71,3 @@ docker compose up --build -d
 ## Контакты
 - **Имя**: Александр Волжанин
 - **Email**: alexandervolzhanin2004@gmail.com
-- **GitHub**: [m4deme1ns4ne](https://github.com/m4deme1ns4ne)
