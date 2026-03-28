@@ -1,73 +1,68 @@
-# Conspectius
+# Conspectius Telegram Bot (conspectius-tg-bot)
 
-![изображение](https://github.com/user-attachments/assets/c6cb0aee-0ad8-49ef-bccb-3fe4270065e5)
+**conspectius-tg-bot** — это клиентский Telegram-интерфейс для системы Conspectius.
 
-Conspectius — это программа, предназначенная для создания детализированных и академических конспектов на основе аудио лекций. Она помогает пользователям эффективно обрабатывать и структурировать информацию, полученную из аудио материалов, что особенно полезно для студентов и исследователей.
+Проект реализует концепцию «легкого клиента»: бот отвечает исключительно за удобное взаимодействие с пользователем (прием аудиофайлов и выдачу готового результата), делегируя тяжелую ML-обработку (транскрибацию и генерацию академических конспектов) ядру системы. Бот помогает студентам и исследователям превращать многочасовые аудиолекции в подробные, структурированные конспекты прямо в мессенджере.
 
+## Функционал
 
-## Оглавление
-
-- [Conspectius](#conspectius)
-  - [Установка](#установка)
-  - [Использование](#использование)
-  - [Технологии](#технологии)
-  - [Лицензия](#лицензия)
-  - [Контакты](#контакты)
+  * Прием аудиолекций в форматах аудиофайлов.
+  * Обработка пользовательских настроек.
+  * Отправка пользователю итогового академического конспекта.
 
 ## Установка
 
-Для установки проекта необходимо использовать [Poetry](https://python-poetry.org/). Убедитесь, что у вас установлен Python версии 3.12 или выше.
+Для локальной разработки инструмента используется [Poetry](https://python-poetry.org/). Убедитесь, что у вас установлен Python версии 3.12 или выше.
 
-1. Клонируйте репозиторий:
+Клонируйте репозиторий бота:
 
-  ```bash
-  git clone https://github.com/m4deme1ns4ne/CONSPECTIUS.git
-  git clone https://github.com/m4deme1ns4ne/site_conspectius.git
+```bash
+git clone https://github.com/m4deme1ns4ne/conspectius-tg-bot.git
+cd conspectius-tg-bot
+```
 
-  cd CONSPECTIUS
-  ```
+*(Примечание: Исходный код веб-интерфейса находится в отдельном репозитории `conspectius-site`, а ядро обработки выделяется в `conspectius-engine`)*.
 
-2. Создайте файл `.env` в корне директории CONSPECTIUS и добавьте необходимые переменные окружения:
+## Конфигурация
 
-   ```
-   TELEGRAM_BOT_TOKEN="your_telegram_bot_token"
-   OPENAI_API_KEY="your_openai_api_key"
-   PROXY="your_proxy_url" (опционально)
-   ASSEMBLY_AI_API="your_assembly_ai_token"
-   URL=your_URL (для сервера загрузчика, опционально)
+Создайте файл `.env` в корневой директории проекта и добавьте необходимые переменные окружения для подключения API и базы данных:
 
-   MYSQL_ROOT_PASSWORD=your_MYSQL_ROOT_PASSWORD
-   MYSQL_DATABASE=your_MYSQL_DATABASE
-   MYSQL_USER=your_MYSQL_USER
-   MYSQL_PASSWORD=your_MYSQL_PASSWORD
-   MYSQL_PORT=your_MYSQL_PORT
-   MYSQL_HOST=your_MYSQL_HOST
-   ```
+```env
+# Настройки Telegram
+TELEGRAM_BOT_TOKEN="your_telegram_bot_token"
 
-## Использование
+# Настройки внешних API (для текущей интеграции)
+OPENAI_API_KEY="your_openai_api_key"
+ASSEMBLY_AI_API="your_assembly_ai_token"
 
-Запустите бота с помощью следующей команды:
+# Сетевые настройки
+PROXY="your_proxy_url" # (опционально)
+URL="your_URL"         # (для сервера загрузчика, опционально)
+
+# База данных (MySQL)
+MYSQL_ROOT_PASSWORD="your_MYSQL_ROOT_PASSWORD"
+MYSQL_DATABASE="your_MYSQL_DATABASE"
+MYSQL_USER="your_MYSQL_USER"
+MYSQL_PASSWORD="your_MYSQL_PASSWORD"
+MYSQL_PORT="your_MYSQL_PORT"
+MYSQL_HOST="your_MYSQL_HOST"
+```
+
+## Запуск
+
+Выполните следующую команду в корне проекта:
 
 ```bash
 docker compose up --build -d
 ```
 
-После запуска бота вы можете отправить аудиофайл, и он автоматически создаст конспект на основе вашего аудио сообщения. Бот поддерживает различные языки и может создавать конспекты разной длины в зависимости от ваших предпочтений.
+После успешного запуска контейнера бот готов к работе. Отправьте ему аудиосообщение в Telegram, и он автоматически инициирует процесс создания конспекта.
 
 ## Технологии
 
-Основные технологии и библиотеки использующиеся в проекте:
+Стек технологий клиентской части (Telegram Bot):
 
-- **Python 3.12**: Основной язык программирования.
-- **Aiogram**: Библиотека для создания Telegram-ботов.
-- **AssemblyAI**: API для транскрибации аудио в текст.
-- **Poetry**: Инструмент для управления зависимостями и упаковки.
-- **OpenAI**: Библиотека предоставляющая доступ к LLM gpt.
-
-## Лицензия
-
-Этот проект лицензирован под лицензией GNU General Public License v3.0. Подробности можно найти в файле [LICENSE](LICENSE).
-
-## Контакты
-- **Имя**: Александр Волжанин
-- **Email**: alexandervolzhanin2004@gmail.com
+  - **Python 3.12**
+  - **Aiogram**
+  - **Poetry**
+  - **Docker & Docker Compose**
